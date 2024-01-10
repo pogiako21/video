@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Page</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: violet; /* Set the background color to violet */
+            overflow: hidden; /* Hide overflowing elements */
+        }
+
+        #videoContainer {
+            display: none;
+        }
+
+        .title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            cursor: pointer; /* Add cursor style to indicate it's clickable */
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Falling Flowers Animation */
+        .flower {
+            position: absolute;
+            background-color: #ff69b4; /* Pink color for the flowers */
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: fall 5s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title" onclick="navigateToLink()">I love you always</div>
+
+    <label class="switch">
+        <input type="checkbox" id="videoToggle">
+        <span class="slider"></span>
+    </label>
+
+    <div id="videoContainer">
+        <video width="640" height="360" controls autoplay id="fullscreenVideo">
+            <source src="your-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Falling Flowers -->
+    <div class="flower" style="left: 10%;"></div>
+    <div class="flower" style="left: 30%;"></div>
+    <div class="flower" style="left: 50%;"></div>
+    <div class="flower" style="left: 70%;"></div>
+    <div class="flower" style="left: 90%;"></div>
+
+    <script>
+        function navigateToLink() {
+            // Replace "your-link-url" with the actual URL you want to link to
+            window.location.href = 'your-link-url';
+        }
+
+        document.getElementById('videoToggle').addEventListener('change', function() {
+            var videoContainer = document.getElementById('videoContainer');
+            var fullscreenVideo = document.getElementById('fullscreenVideo');
+
+            videoContainer.style.display = this.checked ? 'block' : 'none';
+
+            if (this.checked) {
+                fullscreenVideo.play();
+
+                if (fullscreenVideo.requestFullscreen) {
+                    fullscreenVideo.requestFullscreen();
+                } else if (fullscreenVideo.mozRequestFullScreen) {
+                    fullscreenVideo.mozRequestFullScreen();
+                } else if (fullscreenVideo.webkitRequestFullscreen) {
+                    fullscreenVideo.webkitRequestFullscreen();
+                } else if (fullscreenVideo.msRequestFullscreen) {
+                    fullscreenVideo.msRequestFullscreen();
+                }
+            } else {
+                fullscreenVideo.pause();
+
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
